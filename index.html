@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYNAPSE × INFINITELOGIC | من الفكرة إلى الأثر</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#7e22ce',
+                        accent: '#0ea5e9',
+                        dark: '#1e293b',
+                        light: '#f8fafc',
+                        future: '#4f46e5',
+                        tech: '#06b6d4',
+                        green: '#10b981'
+                    },
+                    fontFamily: {
+                        arabic: ['Tajawal', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(to bottom, #f0f9ff, #f5f3ff);
+            direction: rtl;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #2563eb, #7e22ce);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .futuristic-text {
+            background: linear-gradient(90deg, #4f46e5, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .project-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 0 25px rgba(79, 70, 229, 0.1);
+        }
+        .sdg-badge {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+        .modal {
+            transition: opacity 0.3s ease;
+        }
+        .print-hide {
+            display: block;
+        }
+        @media print {
+            .print-hide {
+                display: none;
+            }
+            .print-content {
+                padding: 10px !important;
+            }
+            .print-section {
+                page-break-inside: avoid;
+            }
+        }
+        .feature-badge {
+            background: linear-gradient(to right, #4f46e5, #06b6d4);
+            color: white;
+        }
+        .timeline-item {
+            position: relative;
+            padding-right: 30px;
+            margin-bottom: 30px;
+        }
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: linear-gradient(to right, #4f46e5, #06b6d4);
+        }
+        .timeline-item:after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            right: 7px;
+            width: 1px;
+            height: calc(100% + 15px);
+            background: #e5e7eb;
+        }
+        .timeline-item:last-child:after {
+            display: none;
+        }
+        .tech-icon {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #4f46e5, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .modal-content {
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .futuristic-bg {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800">
+    <!-- شريط التنقل -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md shadow-md py-3 print-hide">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-primary to-secondary flex items-center justify-center">
+                    <i class="fas fa-lightbulb text-white"></i>
+                </div>
+                <h1 class="text-xl font-bold text-slate-800 mr-3 gradient-text">SYNAPSE × INFINITELOGIC</h1>
+            </div>
+            
+            <nav class="hidden md:flex space-x-1">
+                <a href="#about" class="px-4 py-2 rounded-lg hover:bg-slate-100 font-medium">عنّا</a>
+                <a href="#projects" class="px-4 py-2 rounded-lg hover:bg-slate-100 font-medium">المشاريع</a>
+                <a href="#impact" class="px-4 py-2 rounded-lg hover:bg-slate-100 font-medium">الأثر</a>
+                <a href="#contact" class="px-4 py-2 rounded-lg bg-gradient-to-r from-primary to-secondary text-white font-medium">تواصل معنا</a>
+            </nav>
+            
+            <div class="flex items-center space-x-2">
+                <button class="bg-slate-100 p-2 rounded-lg print-hide" onclick="window.print()">
+                    <i class="fas fa-print text-slate-700"></i>
+                </button>
+                <button class="bg-slate-100 p-2 rounded-lg print-hide" id="share-btn">
+                    <i class="fas fa-share-alt text-slate-700"></i>
+                </button>
+                <button class="md:hidden bg-slate-100 p-2 rounded-lg print-hide" id="mobile-menu">
+                    <i class="fas fa-bars text-slate-700"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- القسم الرئيسي -->
+    <main class="pt-20">
+        <!-- الهيرو -->
+        <section class="py-16 md:py-24 bg-gradient-to-br from-blue-50 to-purple-50">
+            <div class="container mx-auto px-4">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="text-center md:text-right">
+                        <h2 class="text-4xl md:text-5xl font-black mb-6 futuristic-text">رؤية الجزائر 2030: من الفكرة إلى الأثر</h2>
+                        <p class="text-lg text-slate-700 mb-8 max-w-2xl mx-auto md:mr-0">
+                            محفظة مشاريع متكاملة في التعليم الذكي، الطاقة النظيفة، النقل الحضري، 
+                            التمكين المجتمعي، والحوكمة الحضرية — مصممة للإقناع والتنفيذ.
+                        </p>
+                        <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                            <a href="#contact" class="px-6 py-3 bg-gradient-to-r from-future to-tech text-white rounded-lg font-medium shadow-lg hover:opacity-90">
+                                تواصل معنا الآن
+                            </a>
+                            <button class="px-6 py-3 bg-white border border-slate-300 rounded-lg font-medium shadow hover:bg-slate-50 print-hide" onclick="window.print()">
+                                <i class="fas fa-download mr-2"></i>تحميل PDF
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white p-4 rounded-2xl shadow-lg border border-slate-200 transform transition hover:scale-105">
+                            <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mb-4 mx-auto">
+                                <i class="fas fa-graduation-cap text-blue-600 text-2xl"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-center mb-2">التعليم الذكي</h3>
+                            <p class="text-slate-600 text-sm text-center">منصات تعليمية باستخدام الذكاء الاصطناعي</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-lg border border-slate-200 transform transition hover:scale-105">
+                            <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-4 mx-auto">
+                                <i class="fas fa-leaf text-green-600 text-2xl"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-center mb-2">الطاقة النظيفة</h3>
+                            <p class="text-slate-600 text-sm text-center">حلول مبتكرة لتوليد الطاقة المتجددة</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-lg border border-slate-200 transform transition hover:scale-105">
+                            <div class="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center mb-4 mx-auto">
+                                <i class="fas fa-car text-amber-600 text-2xl"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-center mb-2">النقل الحضري</h3>
+                            <p class="text-slate-600 text-sm text-center">تحسين حركة النقل بالمركبات الكهربائية</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-lg border border-slate-200 transform transition hover:scale-105">
+                            <div class="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center mb-4 mx-auto">
+                                <i class="fas fa-hands-helping text-purple-600 text-2xl"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-center mb-2">التمكين المجتمعي</h3>
+                            <p class="text-slate-600 text-sm text-center">برامج تمكين للشباب والمرأة</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- عن الشركة -->
+        <section id="about" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4 gradient-text">عن SYNAPSE و INFINITELOGIC</h2>
+                    <p class="text-slate-600 max-w-2xl mx-auto">تعلم بالمشاريع + تنفيذ احترافي + أثر قابل للقياس</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    <div class="bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-lg bg-blue-500 flex items-center justify-center">
+                                <i class="fas fa-brain text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mr-3">SYNAPSE – النادي العلمي</h3>
+                        </div>
+                        <ul class="space-y-2 text-slate-700">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>تخصصات: الذكاء الاصطناعي، علوم البيانات، الهندسة، الاقتصاد، الفنون التقنية</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>تعلم بالمشاريع، ورشات ومسابقات وزيارات ميدانية</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>إدماج مجتمعي وتمكين فئات مستهدفة</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-lg bg-purple-500 flex items-center justify-center">
+                                <i class="fas fa-cogs text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mr-3">INFINITELOGIC – المظلّة التنفيذية</h3>
+                        </div>
+                        <ul class="space-y-2 text-slate-700">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>تحويل الابتكار إلى منتجات وخدمات قابلة للتوسع</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>شبكة شراكات: حكومة، منظمات، جمعيات، مستثمرون</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span>تطوير حلول متكاملة لتحقيق رؤية الجزائر 2030</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- المشاريع -->
+        <section id="projects" class="py-16 bg-slate-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4 gradient-text">مشاريعنا المستقبلية</h2>
+                    <p class="text-slate-600 max-w-2xl mx-auto">حلول مبتكرة تحقق رؤية الجزائر 2030</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                    <!-- المشروع 1 -->
+                    <div class="project-card bg-white rounded-2xl overflow-hidden">
+                        <div class="p-5">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm mb-2">التعليم الذكي</span>
+                                    <h3 class="text-xl font-bold mb-2">قافلة نور – التمكين المجتمعي والتعليمي</h3>
+                                </div>
+                                <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                                    <i class="fas fa-bus text-white"></i>
+                                </div>
+                            </div>
+                            <p class="text-slate-600 mb-4">نأخذ العلم والمهارات الرقمية والريادية إلى المناطق النائية – مع مسار خاص لتمكين المرأة</p>
+                            
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs">SDG 4</span>
+                                <span class="px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs">SDG 5</span>
+                                <span class="px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs">SDG 8</span>
+                            </div>
+                        </div>
+                        <div class="px-5 py-3 bg-slate-50 border-t border-slate-200">
+                            <button class="text-primary font-medium w-full text-right project-details" data-project="1">
+                                عرض التفاصيل <i class="fas fa-arrow-left ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- المشروع 2 -->
+                    <div class="project-card bg-white rounded-2xl overflow-hidden">
+                        <div class="p-5">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm mb-2">الطاقة النظيفة</span>
+                                    <h3 class="text-xl font-bold mb-2">البلاط الذكي – طاقة من خطوات المشاة</h3>
+                                </div>
+                                <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center">
+                                    <i class="fas fa-shoe-prints text-white"></i>
+                                </div>
+                            </div>
+                            <p class="text-slate-600 mb-4">تحويل الحركة إلى ضوء في نقاط الازدحام الحضري</p>
+                            
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-green-50 text-green-700 rounded text-xs">SDG 7</span>
+                                <span class="px-2 py-1 bg-green-50 text-green-700 rounded text-xs">SDG 9</span>
+                                <span class="px-2 py-1 bg-green-50 text-green-700 rounded text-xs">SDG 11</span>
+                            </div>
+                        </div>
+                        <div class="px-5 py-3 bg-slate-50 border-t border-slate-200">
+                            <button class="text-primary font-medium w-full text-right project-details" data-project="2">
+                                عرض التفاصيل <i class="fas fa-arrow-left ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- المشروع 3 -->
+                    <div class="project-card bg-white rounded-2xl overflow-hidden">
+                        <div class="p-5">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="inline-block px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm mb-2">النقل الحضري</span>
+                                    <h3 class="text-xl font-bold mb-2">IL‑City – مركبة كهربائية حضرية صغيرة</h3>
+                                </div>
+                                <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center">
+                                    <i class="fas fa-car text-white"></i>
+                                </div>
+                            </div>
+                            <p class="text-slate-600 mb-4">تنقّل نظيف، حجم ذكي، تكلفة منخفضة/كم</p>
+                            
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-amber-50 text-amber-700 rounded text-xs">SDG 7</span>
+                                <span class="px-2 py-1 bg-amber-50 text-amber-700 rounded text-xs">SDG 9</span>
+                                <span class="px-2 py-1 bg-amber-50 text-amber-700 rounded text-xs">SDG 11</span>
+                            </div>
+                        </div>
+                        <div class="px-5 py-3 bg-slate-50 border-t border-slate-200">
+                            <button class="text-primary font-medium w-full text-right project-details" data-project="3">
+                                عرض التفاصيل <i class="fas fa-arrow-left ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- المشروع 4 -->
+                    <div class="project-card bg-white rounded-2xl overflow-hidden">
+                        <div class="p-5">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="inline-block px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm mb-2">التمكين المجتمعي</span>
+                                    <h3 class="text-xl font-bold mb-2">Infiteach + بوت نور – تعليم ذكي مطابق للمناهج</h3>
+                                </div>
+                                <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+                                    <i class="fas fa-robot text-white"></i>
+                                </div>
+                            </div>
+                            <p class="text-slate-600 mb-4">محتوى موثوق + مساعد ذكي + لوحات متابعة للمدارس</p>
+                            
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-purple-50 text-purple-700 rounded text-xs">SDG 4</span>
+                                <span class="px-2 py-1 bg-purple-50 text-purple-700 rounded text-xs">SDG 9</span>
+                                <span class="px-2 py-1 bg-purple-50 text-purple-700 rounded text-xs">SDG 10</span>
+                            </div>
+                        </div>
+                        <div class="px-5 py-3 bg-slate-50 border-t border-slate-200">
+                            <button class="text-primary font-medium w-full text-right project-details" data-project="4">
+                                عرض التفاصيل <i class="fas fa-arrow-left ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- المشروع 5 -->
+                    <div class="project-card bg-white rounded-2xl overflow-hidden">
+                        <div class="p-5">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="inline-block px-3 py-1 bg-rose-100 text-rose-800 rounded-full text-sm mb-2">الصناعة الإبداعية</span>
+                                    <h3 class="text-xl font-bold mb-2">لعبة فيديو عربية – هوية وجودة</h3>
+                                </div>
+                                <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-rose-500 to-pink-500 flex items-center justify-center">
+                                    <i class="fas fa-gamepad text-white"></i>
+                                </div>
+                            </div>
+                            <p class="text-slate-600 mb-4">مغامرة/أكشن مستوحاة من الصحراء وقصص البشر</p>
+                            
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-rose-50 text-rose-700 rounded text-xs">SDG 8</span>
+                                <span class="px-2 py-1 bg-rose-50 text-rose-700 rounded text-xs">SDG 9</span>
+                                <span class="px-2 py-1 bg-rose-50 text-rose-700 rounded text-xs">SDG 11</span>
+                            </div>
+                        </div>
+                        <div class="px-5 py-3 bg-slate-50 border-t border-slate-200">
+                            <button class="text-primary font-medium w-full text-right project-details" data-project="5">
+                                عرض التفاصيل <i class="fas fa-arrow-left ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- المشروع 6 -->
+                    <div class="project-card bg-white rounded-2xl overflow-hidden">
+                        <div class="p-5">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-sm mb-2">الاستدامة</span>
+                                    <h3 class="text-xl font-bold mb-2">المدينة النموذجية – مختبر حضري حي</h3>
+                                </div>
+                                <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 flex items-center justify-center">
+                                    <i class="fas fa-city text-white"></i>
+                                </div>
+                            </div>
+                            <p class="text-slate-600 mb-4">طاقة متجددة، تنقّل ذكي، إدارة مياه ونفايات، وتوأم رقمي</p>
+                            
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-emerald-50 text-emerald-700 rounded text-xs">SDG 7</span>
+                                <span class="px-2 py-1 bg-emerald-50 text-emerald-700 rounded text-xs">SDG 9</span>
+                                <span class="px-2 py-1 bg-emerald-50 text-emerald-700 rounded text-xs">SDG 11</span>
+                            </div>
+                        </div>
+                        <div class="px-5 py-3 bg-slate-50 border-t border-slate-200">
+                            <button class="text-primary font-medium w-full text-right project-details" data-project="6">
+                                عرض التفاصيل <i class="fas fa-arrow-left ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- الأثر -->
+        <section id="impact" class="py-16 bg-gradient-to-br from-blue-50 to-purple-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4 gradient-text">الأثر الشامل والمواءمة مع SDGs</h2>
+                    <p class="text-slate-600 max-w-2xl mx-auto">المشاريع مترابطة وتدعم أهداف التنمية المستدامة</p>
+                </div>
+                
+                <div class="max-w-5xl mx-auto">
+                    <div class="grid md:grid-cols-2 gap-8 mb-12">
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <h3 class="text-xl font-bold mb-4 text-center">محاور الأثر</h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mt-1 mr-3">
+                                        <i class="fas fa-book text-blue-600"></i>
+                                    </div>
+                                    <span>تحسين الوصول للتعليم والمهارات</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mt-1 mr-3">
+                                        <i class="fas fa-sun text-green-600"></i>
+                                    </div>
+                                    <span>خفض الانبعاثات والتحوّل للطاقة النظيفة</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center mt-1 mr-3">
+                                        <i class="fas fa-road text-amber-600"></i>
+                                    </div>
+                                    <span>تنقّل حضري أكثر كفاءة</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center mt-1 mr-3">
+                                        <i class="fas fa-home text-purple-600"></i>
+                                    </div>
+                                    <span>تحسين الصحة والبيئة المنزلية</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center mt-1 mr-3">
+                                        <i class="fas fa-chart-line text-rose-600"></i>
+                                    </div>
+                                    <span>حوكمة وشفافية عبر قياس الأثر</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <h3 class="text-xl font-bold mb-4 text-center">SDGs ذات الصلة</h3>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="sdg-badge bg-blue-100 p-3 rounded-lg text-center">
+                                    <div class="text-2xl font-bold text-blue-700">4</div>
+                                    <div class="text-sm text-blue-800">تعليم جيّد</div>
+                                </div>
+                                <div class="sdg-badge bg-green-100 p-3 rounded-lg text-center">
+                                    <div class="text-2xl font-bold text-green-700">5</div>
+                                    <div class="text-sm text-green-800">مساواة بين الجنسين</div>
+                                </div>
+                                <div class="sdg-badge bg-yellow-100 p-3 rounded-lg text-center">
+                                    <div class="text-2xl font-bold text-yellow-700">7</div>
+                                    <div class="text-sm text-yellow-800">طاقة نظيفة</div>
+                                </div>
+                                <div class="sdg-badge bg-amber-100 p-3 rounded-lg text-center">
+                                    <div class="text-2xl font-bold text-amber-700">8</div>
+                                    <div class="text-sm text-amber-800">عمل لائق ونمو اقتصادي</div>
+                                </div>
+                                <div class="sdg-badge bg-purple-100 p-3 rounded-lg text-center">
+                                    <div class="text-2xl font-bold text-purple-700">9</div>
+                                    <div class="text-sm text-purple-800">صناعة وابتكار وبنية تحتية</div>
+                                </div>
+                                <div class="sdg-badge bg-pink-100 p-3 rounded-lg text-center">
+                                    <div class="text-2xl font-bold text-pink-700">11</div>
+                                    <div class="text-sm text-pink-800">مدن ومجتمعات مستدامة</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-future to-tech p-6 rounded-2xl shadow-xl">
+                        <div class="grid md:grid-cols-4 gap-6 text-center text-white">
+                            <div>
+                                <div class="text-3xl font-bold mb-2">+25</div>
+                                <div>مشروع مبتكر</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold mb-2">+15</div>
+                                <div>ولاية مستفيدة</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold mb-2">+50</div>
+                                <div>شريك استراتيجي</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold mb-2">+10K</div>
+                                <div>مستفيد مباشر</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- تواصل معنا -->
+        <section id="contact" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4 gradient-text">نموذج اهتمام بالتعاون/الدعم</h2>
+                    <p class="text-slate-600 max-w-2xl mx-auto">أرسل لنا نيتك بالتعاون الآن، وسنعود إليك خلال 48 ساعة</p>
+                </div>
+                
+                <div class="max-w-4xl mx-auto">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-slate-50 p-6 rounded-2xl shadow-sm">
+                            <form id="contact-form">
+                                <div class="mb-4">
+                                    <label class="block text-slate-700 mb-2">اسم الجهة/المؤسسة</label>
+                                    <input type="text" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-slate-700 mb-2">الاسم والصفة</label>
+                                    <input type="text" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-slate-700 mb-2">البريد الإلكتروني</label>
+                                    <input type="email" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-slate-700 mb-2">تفاصيل الاهتمام</label>
+                                    <textarea class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-primary" rows="4" required></textarea>
+                                </div>
+                                <button type="submit" class="w-full py-3 bg-gradient-to-r from-future to-tech text-white rounded-lg font-medium shadow-lg hover:opacity-90">
+                                    إرسال الطلب
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <div>
+                            <div class="bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-2xl border border-slate-200 mb-6 shadow-sm">
+                                <h3 class="text-xl font-bold mb-4">ماذا بعد الإرسال؟</h3>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                        <span>نراجِع رسالتكم ونقترح اجتماعًا تعارفيًا</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                        <span>نختار المشاريع الملائمة ونحدّد موقع/نطاق الطيار</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                        <span>نصيغ مذكرة تفاهم (MoU) بخطة عمل ومؤشرات أثر</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                                <h3 class="text-xl font-bold mb-4">معلومات التواصل</h3>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-user text-primary mt-1 mr-3"></i>
+                                        <span>بن دعاس زين الدين</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-phone text-primary mt-1 mr-3"></i>
+                                        <span>0696863424</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-envelope text-primary mt-1 mr-3"></i>
+                                        <span>tutophy.ads@gmail.com</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fab fa-instagram text-primary mt-1 mr-3"></i>
+                                        <span>https://www.instagram.com/tutophy</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- الفوتر -->
+    <footer class="py-10 bg-slate-800 text-slate-200">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-primary to-secondary flex items-center justify-center">
+                            <i class="fas fa-lightbulb text-white"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mr-3 gradient-text">SYNAPSE × INFINITELOGIC</h4>
+                    </div>
+                    <p class="text-slate-400 mb-4">من الفكرة إلى الأثر: محفظة مشاريع متكاملة في التعليم الذكي، الطاقة النظيفة، النقل الحضري، التمكين المجتمعي، والحوكمة الحضرية.</p>
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center hover:bg-primary">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center hover:bg-primary">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center hover:bg-primary">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center hover:bg-primary">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">روابط سريعة</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#about" class="hover:text-primary">عنّا</a></li>
+                        <li><a href="#projects" class="hover:text-primary">المشاريع</a></li>
+                        <li><a href="#impact" class="hover:text-primary">الأثر</a></li>
+                        <li><a href="#contact" class="hover:text-primary">تواصل معنا</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">المشاريع</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-primary">قافلة نور</a></li>
+                        <li><a href="#" class="hover:text-primary">البلاط الذكي</a></li>
+                        <li><a href="#" class="hover:text-primary">IL-City</a></li>
+                        <li><a href="#" class="hover:text-primary">Infiteach + نور</a></li>
+                        <li><a href="#" class="hover:text-primary">لعبة فيديو عربية</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">اشترك في النشرة البريدية</h4>
+                    <p class="text-slate-400 mb-4">ابق على اطلاع بأحدث مشاريعنا وأخبارنا</p>
+                    <div class="flex">
+                        <input type="email" placeholder="بريدك الإلكتروني" class="px-4 py-2 rounded-l-lg w-full focus:outline-none text-slate-800">
+                        <button class="bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-r-lg">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-700 mt-8 pt-8 text-center text-slate-500">
+                <p>© 2025 SYNAPSE × INFINITELOGIC. جميع الحقوق محفوظة.</p>
+                <p class="mt-2">تم إعداد هذا العرض لليوم التعريفي المخصص للشركاء والداعمين.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- مودال المشروع -->
+    <div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 hidden print-hide">
+        <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto modal-content">
+            <div class="p-5 border-b border-slate-200 flex justify-between items-center">
+                <h3 id="modal-title" class="text-xl font-bold"></h3>
+                <button id="close-modal" class="text-slate-500 hover:text-slate-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="modal-content" class="p-5">
+                <!-- سيتم ملؤه بواسطة الجافاسكريبت -->
+            </div>
+            <div class="p-4 border-t flex justify-end">
+                <button id="modal-close-btn" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-700 font-medium">
+                    إغلاق
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // بيانات المشاريع
+        const projectsData = {
+            1: {
+                title: "قافلة نور – التمكين المجتمعي والتعليمي",
+                problem: [
+                    "صعوبة وصول للتعليم والتقنيات الحديثة في المناطق النائية",
+                    "ضعف فرص التمكين الاقتصادي للنساء والشباب"
+                ],
+                solution: [
+                    "حافلة/فان مُجهّز كمختبر متنقل: حواسيب، إنترنت، أطقم إلكترونيات تعليمية، طابعة ثلاثية الأبعاد، ركن واقع معزّز",
+                    "مسار خاص للمرأة: تدريب + إرشاد + ربط بمنصات تسويق ومنتجات منزلية حزم تدريب 3 أيام: مهارات رقمية أساسية، أدوات الذكاء الاصطناعي للإنتاجية، مشاريع إلكترونية مبسطة، ريادة وتسويق منزلي",
+                   "استشارات طبية وقانونية مع ضمان كامل الخصوصية"
+                ],
+                features: [
+                    "جدولة شهرية لمسارات القافلة وتنسيق مسبق مع جمعيات محلية",
+                    "نظام تسجيل وتتبّع للمستفيدين وشهادات إلكترونية",
+                    "حقيبة محتوى Offline للاستخدام بدون إنترنت"
+                ],
+                impact: [
+                    "الوصول إلى 15 ولاية/بلدية في 12 شهرًا",
+                    "تمكين 40% من المستفيدين من إطلاق مبادرة تعليمية/منزلية",
+                    "رفع الوعي الرقمي والمهني لفئات هشة"
+                ],
+                kpis: [
+                    "عدد المستفيدين/الزيارة: 50-100 مستفيد",
+                    "نسبة مشاركة النساء: 60%",
+                    "مشاريع منزلية/تعليمية أُطلقت خلال 90 يومًا: 25 مشروع"
+                ],
+                plan: [
+                    "تجهيز المركبة والمحتوى (4 أسابيع)",
+                    "10 زيارات تجريبية + تقييم (3 أشهر)",
+                    "توسيع مدروس وفق النتائج (6 أشهر)"
+                ],
+                ask: {
+                    needs: [
+                        "تمويل تجهيز وتشغيل 6–12 شهرًا",
+                        "تراخيص وتنقل وتسهيلات ميدانية",
+                        "شراكات مع مديريات التربية/التكوين/التضامن + جمعيات محلية"
+                    ],
+                    budget: {
+                        capex: "تجهيز المركبة: 12,000,000 دج",
+                        opex: "تشغيل 6 أشهر: 8,000,000 دج"
+                    }
+                },
+                risks: [
+                    "ضعف الإقبال – العلاج: تعبئة محلية مسبقة وتكييف المحتوى",
+                    "استدامة منخفضة – العلاج: تدريب سفراء محليين + شراكات مستمرة"
+                ],
+                sdgs: ["SDG 4", "SDG 5", "SDG 8"],
+                technologies: ["الذكاء الاصطناعي", "التعليم الرقمي", "الطاقة الشمسية"],
+                timeline: "2024-2025",
+                location: "الولايات الجنوبية والهضاب العليا"
+            },
+            2: {
+                title: "البلاط الذكي – طاقة من خطوات المشاة",
+                problem: [
+                    "تكاليف إنارة الشوارع واعتمادها على طاقة غير نظيفة",
+                    "الحاجة لحلول حضرية مرئية تزيد وعي المجتمع بالطاقة النظيفة"
+                ],
+                solution: [
+                    "بلاط كهرضغطية/ميكانيكي يولّد طاقة عند السير",
+                    "تخزين في بطاريات/مكثفات لتغذية إنارة موضعية أو لوحات معلومات",
+                    "منصة قياس Dashboard لعدد الخطوات والطاقة المنتجة"
+                ],
+                features: [
+                    "ممر تجريبي بطول 50 م في موقع عالي الحركة",
+                    "حساسات وعدّادات وواجهة عرض فورية",
+                    "مواد مقاومة للمطر/الغبار وصيانة دورية"
+                ],
+                impact: [
+                    "تغذية إنارة موضعية لـ 5 ساعات/ليلة في الموقع",
+                    "تخفيض انبعاثات بنسبة 30% ضمن نطاق تجريبي",
+                    "زيادة الوعي بقيمة الطاقة النظيفة للمجتمع"
+                ],
+                kpis: [
+                    "Wh/اليوم المنتجة: 200-300 وات/ساعة",
+                    "ساعات الإنارة الممولة: 5 ساعات/ليلة",
+                    "متانة البلاط (دورات ضغط): 1,000,000 دورة"
+                ],
+                plan: [
+                    "تصميم ونموذج أولي (6–8 أسابيع)",
+                    "تركيب ممر تجريبي (4 أسابيع)",
+                    "قياس وتقرير جدوى (12 أسبوعًا)"
+                ],
+                ask: {
+                    needs: [
+                        "إذن تجريبي من بلدية/جامعة",
+                        "تمويل النموذج والممر التجريبي",
+                        "شراكة أكاديمية لقياسات مستقلة"
+                    ],
+                    budget: {
+                        capex: "تصنيع وتجهيز أولي: 3,500,000 دج",
+                        opex: "صيانة ومراقبة 6 أشهر: 800,000 دج"
+                    }
+                },
+                risks: [
+                    "إنتاجية أقل من المتوقع – العلاج: اختيار موقع بكثافة مثبتة",
+                    "تلف بيئي – العلاج: مواد/طلاءات مناسبة وبرنامج صيانة"
+                ],
+                sdgs: ["SDG 7", "SDG 9", "SDG 11"],
+                technologies: ["طاقة كهرضغطية", "إنترنت الأشياء", "تخزين الطاقة"],
+                timeline: "2024-2025",
+                location: "المدن الكبرى (الجزائر، وهران، باتنة )"
+            },
+            3: {
+                title: "IL‑City – مركبة كهربائية حضرية صغيرة",
+                problem: [
+                    "ازدحام وتلوّث حضري",
+                    "تكلفة الوقود والصيانة المرتفعة"
+                ],
+                solution: [
+                    "تصميم EV صغير بمدى حضري وشحن منزلي/عام",
+                    "تكامل تطبيق لإدارة الشحن والصيانة",
+                    "مكوّنات قابلة للتوفّر محليًا ومعايير سلامة أساسية"
+                ],
+                features: [
+                    "5–10 نماذج أولية لاختبارات ميدانية",
+                    "خطة تصنيع شبه محلي عبر تجميع مرحلي",
+                    "إمكانية أسطول مشاركة سيارات داخل المدينة"
+                ],
+                impact: [
+                    "خفض الانبعاثات الحضرية بنسبة 60%",
+                    "تكلفة/كم أقل مقارنة بمحرك الاحتراق بنسبة 40%",
+                    "تحسين سيولة الحركة ومواقف أسهل"
+                ],
+                kpis: [
+                    "مدى عملي/شحنة: 120 كم",
+                    "تكلفة/كم: 5 دج/كم",
+                    "معدل الأعطال: أقل من 5% سنوياً"
+                ],
+                plan: [
+                    "تصميم هندسي (3 أشهر)",
+                    "نماذج أولية (4–6 أشهر)",
+                    "تجارب ميدانية (3 أشهر)",
+                    "خطة تصنيع/ترخيص"
+                ],
+                ask: {
+                    needs: [
+                        "تمويل النماذج والمساحة الورشية",
+                        "تسهيلات اختبار على طرقات مغلقة",
+                        "شراكات تصنيع/توريد"
+                    ],
+                    budget: {
+                        capex: "تصنيع 5 نماذج أولية: 12,000,000 دج",
+                        opex: "تشغيل واختبار 6 أشهر: 2,500,000 دج"
+                    }
+                },
+                risks: [
+                    "سلاسل توريد – العلاج: بدائل محلية/إقليمية",
+                    "تشريعات – العلاج: التوافق مع معايير السلامة والترخيص"
+                ],
+                sdgs: ["SDG 7", "SDG 9", "SDG 11"],
+                technologies: ["المركبات الكهربائية", "بطاريات الليثيوم", "أنظمة الشحن السريع"],
+                timeline: "2024-2026",
+                location: "المدن الكبرى والمناطق الحضرية"
+            },
+            4: {
+                title: "Infiteach + بوت نور – تعليم ذكي مطابق للمناهج",
+                problem: [
+                    "فجوة بين المناهج والموارد الرقمية الموثوقة",
+                    "حاجة المدارس والأسر لأدوات متابعة فعّالة"
+                ],
+                solution: [
+                    "منصة دروس دعم ودورات للأساتذة",
+                    "بوت 'نور' يبسّط المفاهيم ويقترح تمارين وتغذية راجعة",
+                    "لوحات متابعة للمدارس وبنوك أسئلة"
+                ],
+                features: [
+                    "MVP لمادتين أساسيتين خلال 8–12 أسبوعًا",
+                    "وضع Offline للمناطق ضعيفة الاتصال",
+                    "حماية بيانات ومعايير أخلاقيات الذكاء الاصطناعي"
+                ],
+                impact: [
+                    "تحسن نتائج الاختبارات بنسبة 25%",
+                    "تقليص زمن التعلّم بنسبة 30%",
+                    "رفع رضا المعلّمين والأسَر بنسبة 85%"
+                ],
+                kpis: [
+                    "نسبة التحسّن في العلامات: +25%",
+                    "المستخدمون النشطون يومياً: 5,000 مستخدم",
+                    "اعتمادات مدارس/مديريات: 10 مدارس في السنة الأولى"
+                ],
+                plan: [
+                    "تطوير MVP (3 أشهر)",
+                    "شراكات مع 3–5 مدارس (شهرين)",
+                    "توسيع المحتوى والميزات (6 أشهر)"
+                ],
+                ask: {
+                    needs: [
+                        "تمويل التطوير والمحتوى",
+                        "اتفاقيات مدارس/مديريات",
+                        "اعتماد تربوي/أخلاقي"
+                    ],
+                    budget: {
+                        capex: "تطوير أولي ومنصات: 4,200,000 دج",
+                        opex: "تشغيل/دعم سنوي: 1,800,000 دج"
+                    }
+                },
+                risks: [
+                    "ملاءمة المحتوى – العلاج: إشراك معلّمين في المراجعة",
+                    "الوصول – العلاج: تطبيق خفيف + Offline"
+                ],
+                sdgs: ["SDG 4", "SDG 9", "SDG 10"],
+                technologies: ["الذكاء الاصطناعي", "التعلم الآلي", "منصات التعليم الإلكتروني"],
+                timeline: "2024-2025",
+                location: "جميع أنحاء الجزائر"
+            },
+            5: {
+                title: "لعبة فيديو عربية – هوية وجودة",
+                problem: [
+                    "ندرة ألعاب عربية تعكس ثقافتنا بجودة إنتاج",
+                    "ضعف فرص المواهب المحلية في الصناعة"
+                ],
+                solution: [
+                    "Prototype ثم Vertical Slice يبرز أسلوب اللعب والفن",
+                    "فريق صغير متعدد التخصصات وتسويق جماهيري عربي",
+                    "إصدار أولي للحاسوب/الموبايل"
+                ],
+                features: [
+                    "خارطة طريق تطوير تدريجية",
+                    "معرض فني وهوية سمعية عربية",
+                    "شراكات نشر وتوزيع"
+                ],
+                impact: [
+                    "منتج ثقافي تنافسي يعزز الهوية العربية",
+                    "وظائف لـ 20 مبرمج وفنان",
+                    "ترويج للثقافة محليًا ودوليًا"
+                ],
+                kpis: [
+                    "تحميلات: 100,000 في السنة الأولى",
+                    "تقييمات: 4.5/5",
+                    "إيرادات مبكرة: 500,000 دج"
+                ],
+                plan: [
+                    "Prototype (10–12 أسبوعًا)",
+                    "Vertical Slice (6 أشهر)",
+                    "Demo للمستثمر (شهر)",
+                    "إصدار مبكر (9 أشهر)"
+                ],
+                ask: {
+                    needs: [
+                        "تمويل تطوير أولي",
+                        "تسويق وشراكات نشر",
+                        "أصول فنية وصوتية"
+                    ],
+                    budget: {
+                        capex: "تكاليف فريق وأصول: 8,000,000 دج",
+                        opex: "تشغيل/تحديثات 6 أشهر: 3,000,000 دج"
+                    }
+                },
+                risks: [
+                    "اتساع النطاق – العلاج: تحديد حجم واقعي وإصدارات",
+                    "التسويق – العلاج: تعاون مع مؤثرين ومجتمعات"
+                ],
+                sdgs: ["SDG 8", "SDG 9", "SDG 11"],
+                technologies: ["محركات الألعاب", "الرسومات ثلاثية الأبعاد", "واقع افتراضي"],
+                timeline: "2024-2026",
+                location: "السوق الجزائرية والعربية"
+            },
+            6: {
+                title: "المدينة النموذجية – مختبر حضري حي",
+                problem: [
+                    "تحديات حضرية مركبة: طاقة، نقل، نفايات، جودة حياة",
+                    "تشتت الحلول وغياب التجريب المرحلي"
+                ],
+                solution: [
+                    "حي تجريبي يجمع الطاقة الشمسية، إنارة ذكية، مسارات دراجات، نقاط شحن، مراقبة بيئية",
+                    "توأم رقمي (Digital Twin) لمراقبة البيانات واتخاذ القرار",
+                    "تنفيذ على مراحل وربط بالمجتمع المحلي"
+                ],
+                features: [
+                    "حزمة حلول معيارية قابلة للتوسعة",
+                    "حوكمة PMO ولوحات مؤشرات",
+                    "شراكات جامعية وشركات بنى تحتية"
+                ],
+                impact: [
+                    "خفض استهلاك الطاقة/فرد بنسبة 35%",
+                    "تحسين جودة الهواء بنسبة 40%",
+                    "زيادة التنقل النشط بنسبة 25%"
+                ],
+                kpis: [
+                    "kWh/فرد: 150 كيلوواط/ساعة سنوياً",
+                    "مؤشرات جودة الهواء: ضمن المعايير الدولية",
+                    "حصة التنقل النشط: 30% من التنقلات"
+                ],
+                plan: [
+                    "دراسة جدوى (3–4 أشهر)",
+                    "تصميم تفصيلي (6 أشهر)",
+                    "مرحلة تجريبية (12 شهراً)",
+                    "توسعة (24 شهراً)"
+                ],
+                ask: {
+                    needs: [
+                        "موقع تجريبي برعاية حكومية/بلدية",
+                        "تمويل دراسة الجدوى",
+                        "شراكات جامعية/بنى تحتية"
+                    ],
+                    budget: {
+                        capex: "أعمال موقع وتجهيزات أولية: 15,000,000 دج",
+                        opex: "تشغيل ومراقبة سنوية: 5,000,000 دج"
+                    }
+                },
+                risks: [
+                    "تعقيد متعدد الأطراف – العلاج: PMO وحوكمة واضحة",
+                    "التكلفة – العلاج: تنفيذ تدريجي وتمويل مختلط"
+                ],
+                sdgs: ["SDG 7", "SDG 9", "SDG 11"],
+                technologies: ["التوأم الرقمي", "إنترنت الأشياء", "الذكاء الاصطناعي"],
+                timeline: "2024-2028",
+                location: "مدينة نموذجية في الجزائر"
+            }
+        };
+
+        // وظائف لإدارة المودال
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.project-details').forEach(button => {
+                button.addEventListener('click', () => {
+                    const projectId = button.getAttribute('data-project');
+                    openProjectModal(projectId);
+                });
+            });
+
+            function openProjectModal(projectId) {
+                const project = projectsData[projectId];
+                if (!project) return;
+                
+                // تحديث عنوان المودال
+                document.getElementById('modal-title').textContent = project.title;
+                
+                // بناء محتوى المودال
+                let content = `
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <h4 class="text-lg font-bold mb-2 text-future">المشكلة</h4>
+                            <ul class="list-disc pr-5 space-y-2 text-slate-700">
+                                ${project.problem.map(p => `<li>${p}</li>`).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-lg font-bold mb-2 text-future">الحل</h4>
+                            <ul class="list-disc pr-5 space-y-2 text-slate-700">
+                                ${project.solution.map(s => `<li>${s}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h4 class="text-lg font-bold mb-2 text-future">الميزات الرئيسية</h4>
+                        <div class="flex flex-wrap gap-2">
+                            ${project.features.map(f => `<span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm">${f}</span>`).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <h4 class="text-lg font-bold mb-2 text-future">الأثر المتوقع</h4>
+                            <ul class="list-disc pr-5 space-y-2 text-slate-700">
+                                ${project.impact.map(i => `<li>${i}</li>`).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-lg font-bold mb-2 text-future">مؤشرات الأداء (KPIs)</h4>
+                            <ul class="list-disc pr-5 space-y-2 text-slate-700">
+                                ${project.kpis.map(k => `<li>${k}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h4 class="text-lg font-bold mb-2 text-future">خطة التنفيذ</h4>
+                        <div class="timeline pl-4">
+                            ${project.plan.map((p, index) => `
+                                <div class="timeline-item">
+                                    <div class="bg-slate-50 p-3 rounded-lg">
+                                        <span class="font-bold">المرحلة ${index+1}:</span> ${p}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <h4 class="text-lg font-bold mb-2 text-future">طلبات المشروع</h4>
+                            <ul class="list-disc pr-5 space-y-2 text-slate-700">
+                                ${project.ask.needs.map(n => `<li>${n}</li>`).join('')}
+                                <li class="font-bold">رأس المال: ${project.ask.budget.capex}</li>
+                                <li class="font-bold">التشغيل: ${project.ask.budget.opex}</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-lg font-bold mb-2 text-future">المخاطر وإدارة المخاطر</h4>
+                            <ul class="list-disc pr-5 space-y-2 text-slate-700">
+                                ${project.risks.map(r => `<li>${r}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h4 class="text-lg font-bold mb-2 text-future">التقنيات المستخدمة</h4>
+                        <div class="flex flex-wrap gap-4">
+                            ${project.technologies.map(t => `
+                                <div class="text-center">
+                                    <div class="tech-icon mb-2">
+                                        <i class="fas fa-microchip"></i>
+                                    </div>
+                                    <span class="text-sm">${t}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h4 class="text-lg font-bold mb-2 text-blue-700">الجدول الزمني</h4>
+                            <p>${project.timeline}</p>
+                        </div>
+                        
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h4 class="text-lg font-bold mb-2 text-green-700">الموقع</h4>
+                            <p>${project.location}</p>
+                        </div>
+                        
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <h4 class="text-lg font-bold mb-2 text-purple-700">أهداف التنمية المستدامة</h4>
+                            <div class="flex flex-wrap gap-2">
+                                ${project.sdgs.map(sdg => `<span class="px-2 py-1 bg-white text-purple-700 rounded text-xs">${sdg}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('modal-content').innerHTML = content;
+                document.getElementById('project-modal').classList.remove('hidden');
+            }
+
+            // إغلاق المودال
+            document.getElementById('close-modal').addEventListener('click', closeModal);
+            document.getElementById('modal-close-btn').addEventListener('click', closeModal);
+            
+            function closeModal() {
+                document.getElementById('project-modal').classList.add('hidden');
+            }
+
+            // إغلاق المودال عند النقر خارج المحتوى
+            document.getElementById('project-modal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('project-modal')) {
+                    closeModal();
+                }
+            });
+
+            // وظائف إضافية
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            document.getElementById('contact-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('تم إرسال طلبك بنجاح! سنتواصل معك خلال 48 ساعة.');
+                e.target.reset();
+            });
+
+            document.getElementById('share-btn').addEventListener('click', () => {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'SYNAPSE × INFINITELOGIC',
+                        text: 'اكتشف مشاريعنا المبتكرة في التعليم الذكي، الطاقة النظيفة، النقل الحضري والمزيد!',
+                        url: window.location.href
+                    })
+                    .catch(console.error);
+                } else {
+                    alert('شارك الرابط: ' + window.location.href);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
